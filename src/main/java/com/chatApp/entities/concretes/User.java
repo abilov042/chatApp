@@ -9,12 +9,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        })
 @Getter
 @Setter
-@Table(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -22,30 +29,26 @@ public class User {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "email")
-    @Email
-    @NotBlank
-    @NotNull
     private String email;
 
-    @Column(name = "user_name")
-    @Email
-    @NotBlank
-    @NotNull
-    private String userName;
+    @Column(name = "password")
+    private String password;
 
-    @Column(name = "passwrod")
-    @NotBlank
-    @NotNull
-    private String passwrod;
+    public User(String username, String email, String password){
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
-    @Column(name = "first_name")
-    @NotBlank
-    @NotNull
-    private String firstName;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
-    @Column(name = "last_name")
-    @NotBlank
-    @NotNull
-    private String lastName;
+
 }

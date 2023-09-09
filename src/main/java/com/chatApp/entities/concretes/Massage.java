@@ -21,8 +21,8 @@ public class Massage {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "chat_id")
-    private Chat chat;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "massage")
     private String massage;
