@@ -7,11 +7,12 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class UserInfoResponse {
+
     private int id;
     private String username;
     private String email;

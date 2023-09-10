@@ -1,15 +1,14 @@
 package com.chatApp.entities.dtos.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SingupRequest {
+@Setter
+@Getter
+public class SignupRequest {
     private String username;
     private String email;
     private String password;
