@@ -9,7 +9,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SignupRequest {
+public class SingupRequest {
     private String username;
     private String email;
     private String password;
