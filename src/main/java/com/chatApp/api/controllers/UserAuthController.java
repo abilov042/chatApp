@@ -1,9 +1,7 @@
 package com.chatApp.api.controllers;
 
-import com.chatApp.business.abstractes.UserService;
 import com.chatApp.core.security.entities.UserDetailsImpl;
 import com.chatApp.core.security.jwt.JWTUtils;
-import com.chatApp.core.untilitues.result.DataResult;
 import com.chatApp.dataAccess.abstracts.RoleDao;
 import com.chatApp.dataAccess.abstracts.UserDao;
 import com.chatApp.entities.concretes.ERole;
@@ -14,6 +12,7 @@ import com.chatApp.entities.dtos.request.SignupRequest;
 import com.chatApp.entities.dtos.response.UserInfoResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -33,20 +32,23 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
-@AllArgsConstructor
-public class UserController {
+public class UserAuthController {
 
 
+    @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
     private UserDao userDao;
 
+    @Autowired
     private RoleDao roleDao;
 
+    @Autowired
     private PasswordEncoder encoder;
 
+    @Autowired
     private JWTUtils jwtUtils;
-    private UserService userService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -133,10 +135,6 @@ public class UserController {
     }
 
 
-    @GetMapping("getall")
-    public DataResult<List<User>> getAll(){
 
-        return this.userService.getAll();
-    }
 
 }

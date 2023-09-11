@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class CustumUserDetailsService implements UserDetailsService {
 
-    private final UserDao userDao;
+    private UserDao userDao;
 
 
 
