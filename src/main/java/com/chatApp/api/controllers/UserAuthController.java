@@ -1,7 +1,9 @@
 package com.chatApp.api.controllers;
 
+import com.chatApp.business.abstractes.UserService;
 import com.chatApp.core.security.entities.UserDetailsImpl;
 import com.chatApp.core.security.jwt.JWTUtils;
+import com.chatApp.core.untilitues.result.DataResult;
 import com.chatApp.dataAccess.abstracts.RoleDao;
 import com.chatApp.dataAccess.abstracts.UserDao;
 import com.chatApp.entities.concretes.ERole;
@@ -44,6 +46,7 @@ public class UserController {
     private PasswordEncoder encoder;
 
     private JWTUtils jwtUtils;
+    private UserService userService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -128,4 +131,12 @@ public class UserController {
 
         return ResponseEntity.ok("OK");
     }
+
+
+    @GetMapping("getall")
+    public DataResult<List<User>> getAll(){
+
+        return this.userService.getAll();
+    }
+
 }
