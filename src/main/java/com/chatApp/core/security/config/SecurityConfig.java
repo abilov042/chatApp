@@ -1,6 +1,6 @@
 package com.chatApp.core.security.config;
 
-import com.chatApp.core.security.business.CustumUserDetailsService;
+import com.chatApp.core.security.business.CustomUserDetailsService;
 import com.chatApp.core.security.jwt.AuthTokenFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@ public class SecurityConfig {
 
 
 
-    private CustumUserDetailsService custumUserDetailsService;
+    private CustomUserDetailsService customUserDetailsService;
 
 
     private AuthEntryPointJwt unauthorizedHandler;
@@ -38,7 +38,7 @@ public class SecurityConfig {
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(custumUserDetailsService);
+        authProvider.setUserDetailsService(customUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
@@ -61,7 +61,6 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/api/test/**").permitAll()
                                 .requestMatchers(permitSwagger).permitAll()
                                 .anyRequest().authenticated()
                 );

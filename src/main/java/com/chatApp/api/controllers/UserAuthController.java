@@ -10,6 +10,8 @@ import com.chatApp.entities.concretes.User;
 import com.chatApp.entities.dtos.request.LoginRequest;
 import com.chatApp.entities.dtos.request.SignupRequest;
 import com.chatApp.entities.dtos.response.UserInfoResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,27 +33,24 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/auth")
 public class UserAuthController {
 
 
-    @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
     private UserDao userDao;
 
-    @Autowired
     private RoleDao roleDao;
 
-    @Autowired
     private PasswordEncoder encoder;
 
-    @Autowired
     private JWTUtils jwtUtils;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+
 
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -60,16 +59,19 @@ public class UserAuthController {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+        String jwtToken = jwtUtils.generateJwtToken(authentication);
+
+
 
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+        return ResponseEntity.ok()
                 .body(new UserInfoResponse(userDetails.getId(),
                         userDetails.getUsername(),
                         userDetails.getEmail(),
+                        jwtToken,
                         roles));
     }
 
@@ -119,12 +121,7 @@ public class UserAuthController {
         return ResponseEntity.ok("User registered successfully!");
     }
 
-    @PostMapping("/signout")
-    public ResponseEntity<?> logoutUser() {
-        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body("You've been signed out!");
-    }
+
 
 
     @GetMapping("test")
