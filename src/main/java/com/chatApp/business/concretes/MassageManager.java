@@ -5,8 +5,8 @@ import com.chatApp.core.untilitues.result.DataResult;
 import com.chatApp.core.untilitues.result.Result;
 import com.chatApp.core.untilitues.result.SuccessDataResult;
 import com.chatApp.core.untilitues.result.SuccessResult;
-import com.chatApp.dataAccess.abstracts.MassageDao;
-import com.chatApp.entities.concretes.Massage;
+import com.chatApp.dataAccess.abstracts.MessageDao;
+import com.chatApp.entities.concretes.Message;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +16,15 @@ import java.util.List;
 @AllArgsConstructor
 public class MassageManager implements MassageService {
 
-    private final MassageDao massageDao;
+    private final MessageDao messageDao;
     @Override
-    public Result add(Massage massage) {
-        this.massageDao.save(massage);
+    public Result add(Message message) {
+        this.messageDao.save(message);
         return new SuccessResult("Created massage");
     }
 
     @Override
-    public DataResult<List<Massage>> getAll() {
-        return new SuccessDataResult<List<Massage>>(this.massageDao.findAll(), "Massage is listed");
+    public DataResult<List<Message>> getAll() {
+        return new SuccessDataResult<List<Message>>(this.messageDao.findAll(), "Massage is listed");
     }
 }

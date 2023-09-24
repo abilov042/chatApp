@@ -3,7 +3,7 @@ package com.chatApp.api.controllers;
 import com.chatApp.business.abstractes.MassageService;
 import com.chatApp.core.untilitues.result.DataResult;
 import com.chatApp.core.untilitues.result.ErrorDataResult;
-import com.chatApp.entities.concretes.Massage;
+import com.chatApp.entities.concretes.Message;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +23,13 @@ public class MassageController {
     private final MassageService massageService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(Massage massage){
+    public ResponseEntity<?> add(Message message){
 
-        return ResponseEntity.ok(this.massageService.add(massage));
+        return ResponseEntity.ok(this.massageService.add(message));
     }
 
     @GetMapping("/getall")
-    public DataResult<List<Massage>> getAll(){
+    public DataResult<List<Message>> getAll(){
 
         return this.massageService.getAll();
     }

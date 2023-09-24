@@ -1,20 +1,16 @@
 package com.chatApp.entities.concretes;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Table(name = "massage")
-public class Massage {
+public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -24,8 +20,8 @@ public class Massage {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "massage")
-    private String massage;
+    @Column(name = "message")
+    private String message;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
