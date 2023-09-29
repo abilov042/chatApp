@@ -64,6 +64,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/chat/**").permitAll()
+                                .requestMatchers("/topic/**").permitAll()
                                 .requestMatchers(permitSwagger).permitAll()
                                 .anyRequest().authenticated()
                 );
