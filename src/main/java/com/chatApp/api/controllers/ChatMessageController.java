@@ -18,10 +18,10 @@ public class ChatMessageController {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     @MessageMapping("/chat")
-   // @SendTo("/topic/message")
+    @SendTo("/topic/message")
     public TestMessage receiveMessage(@Payload TestMessage message){
         System.out.println(message);
-        simpMessagingTemplate.convertAndSend("/topic/message", message);
+        // simpMessagingTemplate.convertAndSend("/topic/message", message);
         return message;
     }
 
