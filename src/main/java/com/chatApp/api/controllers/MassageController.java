@@ -29,9 +29,9 @@ public class MassageController {
     }
 
     @GetMapping("/getall")
-    public DataResult<List<Message>> getAll(){
+    public DataResult<List<Message>> getAll(String roomName){
 
-        return this.massageService.getAll();
+        return this.massageService.getAll(roomName);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

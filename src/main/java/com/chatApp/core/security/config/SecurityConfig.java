@@ -67,7 +67,7 @@ public class SecurityConfig {
                                 .requestMatchers("/chat/**").permitAll()
                                 .requestMatchers("/topic/**").permitAll()
                                 .requestMatchers(permitSwagger).permitAll()
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 );
 
         http.authenticationProvider(authenticationProvider());

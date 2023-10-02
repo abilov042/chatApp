@@ -24,7 +24,7 @@ public class MassageManager implements MassageService {
     }
 
     @Override
-    public DataResult<List<Message>> getAll() {
-        return new SuccessDataResult<List<Message>>(this.messageDao.findAll(), "Massage is listed");
+    public DataResult<List<Message>> getAll(String roomName) {
+        return new SuccessDataResult<List<Message>>(this.messageDao.findMessagesByRoomName(roomName), "Massage is listed");
     }
 }
