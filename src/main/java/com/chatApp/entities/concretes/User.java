@@ -46,14 +46,7 @@ public class User {
     }
 
 
-    @ManyToMany(mappedBy = "users")
-    private List<Room> rooms;
 
-
-
-
-    @OneToMany(mappedBy = "sender")
-    private List<Message> messages;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",

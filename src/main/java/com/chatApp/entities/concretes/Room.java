@@ -20,10 +20,15 @@ public class Room {
     @Column(name = "room_name")
     private String roomName;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "room_users",
-            joinColumns = @JoinColumn(name = "room_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
+
+//    @OneToOne
+//    @JoinColumn(name = "message_id")
+//    private Message  message;
+
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "room_users",
+//            joinColumns = @JoinColumn(name = "room_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id"))
+//    private List<User> users;
 
 }

@@ -6,4 +6,5 @@ import com.chatApp.entities.concretes.Room;
 
 public interface RoomService {
     Result save(Room room);
+    DataResult<Room> getRoomByRoomName(String roomName);
 }

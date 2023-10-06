@@ -21,4 +21,10 @@ public class RoomManager implements RoomService {
         this.roomDao.save(room);
         return new SuccessResult("saved room");
     }
+
+    @Override
+    public DataResult<Room> getRoomByRoomName(String roomName) {
+
+        return new SuccessDataResult<Room>(this.roomDao.getRoomByRoomName(roomName).orElseThrow(),"room is found");
+    }
 }

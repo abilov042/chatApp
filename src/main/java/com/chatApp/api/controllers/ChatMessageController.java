@@ -1,5 +1,6 @@
 package com.chatApp.api.controllers;
 
+import com.chatApp.entities.concretes.Message;
 import com.chatApp.entities.concretes.TestMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -19,17 +20,17 @@ public class ChatMessageController {
 
     @MessageMapping("/chat")
     @SendTo("/topic/message")
-    public TestMessage receiveMessage(@Payload TestMessage message){
+    public Message receiveMessage(@Payload Message message){
         System.out.println(message);
         // simpMessagingTemplate.convertAndSend("/topic/message", message);
         return message;
     }
 
-    @MessageMapping("/app/send/{roomName}")
-    @SendTo("/room/{roomName}")
-    public TestMessage sendMessage(@Payload TestMessage message, @DestinationVariable String roomName) {
-
-        return new TestMessage(message.getReceiverName(), message.getMessage());
-    }
+//    @MessageMapping("/app/send/{roomName}")
+//    @SendTo("/room/{roomName}")
+//    public TestMessage sendMessage(@Payload TestMessage message, @DestinationVariable String roomName) {
+//
+//        return new TestMessage(message.getReceiverName(), message.getMessage());
+//    }
 
 }

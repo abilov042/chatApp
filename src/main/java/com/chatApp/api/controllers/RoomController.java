@@ -16,9 +16,15 @@ public class RoomController {
     private final RoomService roomService;
 
     @PostMapping("/save")
-    public Result save(Room room){
+    public Result save(@RequestBody Room room){
 
         return this.roomService.save(room);
+    }
+
+    @PostMapping("/check")
+    public DataResult<Room> getRoomByRoomName(String roomName){
+
+        return this.roomService.getRoomByRoomName(roomName);
     }
 
 }

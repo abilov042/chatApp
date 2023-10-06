@@ -8,9 +8,11 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name = "messages")
 public class Message {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "message_id")
@@ -22,9 +24,17 @@ public class Message {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+//    @ManyToOne
+//    @JoinColumn(name = "sender_id")
+//    private User sender;
+
     @ManyToOne
-    @JoinColumn(name = "sender_id")
-    private User sender;
+    @JoinColumn(name = "room_id")
+    private Room room;
+
+    @ManyToOne
+    @JoinColumn(name ="user_id")
+    private User user;
 
 
 }

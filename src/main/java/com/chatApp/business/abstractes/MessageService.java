@@ -6,7 +6,8 @@ import com.chatApp.entities.concretes.Message;
 
 import java.util.List;
 
-public interface MassageService {
-    public Result add(Message message);
-   // public DataResult<List<Message>> getAll(String roomName);
+public interface MessageService {
+    Result add(Message message);
+    DataResult<List<Message>> getMessageByRoomId(int id);
+
 }
