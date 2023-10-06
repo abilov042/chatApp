@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface MassageService {
     public Result add(Message message);
-    public DataResult<List<Message>> getAll(String roomName);
+   // public DataResult<List<Message>> getAll(String roomName);
 }

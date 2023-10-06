@@ -20,11 +20,11 @@ public class MassageManager implements MassageService {
     @Override
     public Result add(Message message) {
         this.messageDao.save(message);
-        return new SuccessResult("Created massage");
+        return new SuccessResult("added massage");
     }
 
-    @Override
-    public DataResult<List<Message>> getAll(String roomName) {
-        return new SuccessDataResult<List<Message>>(this.messageDao.findMessagesByRoomName(roomName), "Massage is listed");
-    }
+//    @Override
+//    public DataResult<List<Message>> getAll(String roomName) {
+//        return new SuccessDataResult<List<Message>>(this.messageDao.findMessagesByRoomName(roomName), "Massage is listed");
+//    }
 }
