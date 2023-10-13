@@ -17,14 +17,10 @@ public class MessageController {
 
     private final MessageService messageService;
 
-    @PostMapping("/add")
-    public Result add(@RequestBody Message message){
 
-        return this.messageService.add(message);
-    }
 
     @PostMapping("/getByRoomId")
-    public DataResult<List<Message>> getMessageByRoomId(@RequestParam int id){
+    public DataResult<List<Message>> getMessageByRoomId(int id){
 
         return this.messageService.getMessageByRoomId(id);
     }
