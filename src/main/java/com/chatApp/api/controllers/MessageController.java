@@ -2,10 +2,12 @@ package com.chatApp.api.controllers;
 
 import com.chatApp.business.abstractes.MessageService;
 import com.chatApp.core.untilitues.result.DataResult;
-import com.chatApp.core.untilitues.result.Result;
 import com.chatApp.entities.concretes.Message;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

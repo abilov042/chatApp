@@ -2,6 +2,7 @@ package com.chatApp.api.controllers;
 
 import com.chatApp.business.abstractes.MailSenderService;
 import com.chatApp.entities.concretes.User;
+import com.chatApp.entities.dtos.request.MailVerificationUserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,5 +21,11 @@ public class MailSenderController {
         mailSenderService.sendMessage(user);
 
         return true;
+    }
+
+    @PostMapping("/checkCode")
+    public String checkCode(MailVerificationUserDto mailVerificationUserDto){
+
+        return mailSenderService.checkCode(mailVerificationUserDto);
     }
 }
