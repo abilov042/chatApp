@@ -2,6 +2,7 @@ package com.chatApp.business.concretes;
 
 import com.chatApp.business.abstractes.MailSenderService;
 import com.chatApp.dataAccess.abstracts.MailVerificationUserDao;
+import com.chatApp.dataAccess.abstracts.UserDao;
 import com.chatApp.entities.concretes.MailVerificationUser;
 import com.chatApp.entities.concretes.User;
 import com.chatApp.entities.dtos.request.MailVerificationUserDto;
@@ -10,6 +11,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -18,6 +20,7 @@ public class MailSenderManager implements MailSenderService {
 
     private final JavaMailSender javaMailSender;
     private final MailVerificationUserDao mailVerificationUserDao;
+    private final UserDao userDao;
 
     @Override
     public boolean sendMessage(User user) {
@@ -34,11 +37,15 @@ public class MailSenderManager implements MailSenderService {
 
         // save verification
         MailVerificationUser mailVerificationUser = new MailVerificationUser();
+        // check verification exists
+        // if client send mail first time yourself if operator doesn't work
         boolean checkId = mailVerificationUserDao.existsByUser_Id(user.getId());
         if(checkId){
+            // update verification code
             int codeId = mailVerificationUserDao.findIdByUser_id(user.getId());
             mailVerificationUser.setId(codeId);
         }
+        // if, if operator doesn't work in database created new line
         mailVerificationUser.setCode(code);
         mailVerificationUser.setUser(user);
         mailVerificationUserDao.save(mailVerificationUser);
@@ -51,6 +58,9 @@ public class MailSenderManager implements MailSenderService {
                 findByUser_Id(mailVerificationUserDto.getUserId());
 
         if(mailVerificationUser.getCode().equals(mailVerificationUserDto.getCode())){
+            User user = userDao.findById(mailVerificationUserDto.getUserId());
+            user.setVerify(true);
+            userDao.save(user);
             return "Successfully confirmed";
         }
         else{

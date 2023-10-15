@@ -39,6 +39,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "is_verify")
+    private boolean isVerify;
+
     public User(String username, String email, String password){
         this.username = username;
         this.email = email;
