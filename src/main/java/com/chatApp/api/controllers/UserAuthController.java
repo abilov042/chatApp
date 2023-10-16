@@ -2,6 +2,8 @@ package com.chatApp.api.controllers;
 
 import com.chatApp.core.security.entities.UserDetailsImpl;
 import com.chatApp.core.security.jwt.JWTUtils;
+import com.chatApp.core.untilitues.result.ErrorDataResult;
+import com.chatApp.core.untilitues.result.SuccessDataResult;
 import com.chatApp.dataAccess.abstracts.RoleDao;
 import com.chatApp.dataAccess.abstracts.UserDao;
 import com.chatApp.entities.concretes.ERole;
@@ -10,6 +12,7 @@ import com.chatApp.entities.concretes.User;
 import com.chatApp.entities.dtos.request.LoginRequest;
 import com.chatApp.entities.dtos.request.SignupRequest;
 import com.chatApp.entities.dtos.response.UserInfoResponse;
+import com.chatApp.entities.dtos.response.UserInfoVerificationDto;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -51,6 +55,16 @@ public class UserAuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
+        User user = userDao.findByUsername(loginRequest.getUsername()).orElseThrow();
+        UserInfoVerificationDto userInfoVerificationDto = new UserInfoVerificationDto(user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.isVerify());
+
+        if(!userInfoVerificationDto.isVerify()){
+
+            return ResponseEntity.badRequest().body(new ErrorDataResult<UserInfoVerificationDto>(userInfoVerificationDto, "User isn't verified"));
+        }
 
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));

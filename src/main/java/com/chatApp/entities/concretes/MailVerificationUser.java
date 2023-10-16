@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +24,9 @@ public class MailVerificationUser {
 
     @Column(name = "code")
     private String code;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @OneToOne
     @JoinColumn(name = "user_id")

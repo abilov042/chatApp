@@ -10,8 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 @Service
@@ -48,6 +47,7 @@ public class MailSenderManager implements MailSenderService {
         // if, if operator doesn't work in database created new line
         mailVerificationUser.setCode(code);
         mailVerificationUser.setUser(user);
+        mailVerificationUser.setCreatedAt(LocalDateTime.now());
         mailVerificationUserDao.save(mailVerificationUser);
         return true;
     }
@@ -57,14 +57,15 @@ public class MailSenderManager implements MailSenderService {
         MailVerificationUser mailVerificationUser = mailVerificationUserDao.
                 findByUser_Id(mailVerificationUserDto.getUserId());
 
-        if(mailVerificationUser.getCode().equals(mailVerificationUserDto.getCode())){
+        // this line if code and code date didn't expire if operator will be work
+        if(mailVerificationUser.getCode().equals(mailVerificationUserDto.getCode()) && mailVerificationUser.getCreatedAt().plusSeconds(60).isAfter(LocalDateTime.now()) ){
             User user = userDao.findById(mailVerificationUserDto.getUserId());
             user.setVerify(true);
             userDao.save(user);
             return "Successfully confirmed";
         }
         else{
-            return "Code not true";
+            return "Code not true or code date expired";
         }
     }
 
