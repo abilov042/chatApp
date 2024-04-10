@@ -19,13 +19,12 @@ import java.util.Date;
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
-@RequestMapping("/api")
 public class ChatMessageController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final MessageService messageService;
 
-    @MessageMapping("/chat")
+    @MessageMapping("/api/chat")
     @SendTo("/topic/message")
     public Message receiveMessage(@Payload Message message){
         System.out.println(message);
