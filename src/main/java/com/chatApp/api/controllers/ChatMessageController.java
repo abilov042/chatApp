@@ -10,6 +10,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.Date;
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class ChatMessageController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
